@@ -1,6 +1,10 @@
 package com.thiago.postsApi.models.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
@@ -11,10 +15,15 @@ public class User {
 	private String name;
 	private String email;
 	
+	@DBRef(lazy = true)
+	private List<Post> posts;
+	
 	public User() {
+		this.posts = new ArrayList<>();
 	}
 	
 	public User(String id, String name, String email) {
+		this();
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -38,6 +47,10 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public List<Post> getPosts() {
+		return posts;
+	}
+	
 	
 	
 }
