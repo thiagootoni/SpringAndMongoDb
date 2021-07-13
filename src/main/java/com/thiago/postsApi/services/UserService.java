@@ -44,6 +44,11 @@ public class UserService {
 		return new UserDto(user);	
 		
 	}
+	
+	public void deleteOne(String id) {
+		User user = this.getUserById(id);
+		this.repository.delete(user);		
+	}
 
 	private void copyDtoToEntity(UserDto userDto, User user) {
 		user.setName(userDto.getName());
@@ -54,5 +59,7 @@ public class UserService {
 		return this.repository.findById(id)
 				.orElseThrow(() -> new ElementNotFoundException("Elemento não encontrado"));
 	}
+
+	
 
 }
