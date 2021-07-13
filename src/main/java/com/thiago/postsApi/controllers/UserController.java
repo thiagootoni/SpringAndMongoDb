@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,14 @@ public class UserController {
 		userDto = this.service.insertOne(userDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(userDto);
+	}
+	
+	@PutMapping
+	public ResponseEntity<UserDto> updateOne(@RequestBody UserDto userDto, @PathVariable String id){
+		
+		userDto = this.service.updateOne(userDto, id);
+		return ResponseEntity.ok(userDto);
+		
 	}
 
 }

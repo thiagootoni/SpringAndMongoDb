@@ -24,9 +24,7 @@ public class UserService {
 
 	public UserDto findById(String id) {
 		
-		User user = this.repository.findById(id)
-				.orElseThrow(() -> new ElementNotFoundException("Elemento não encontrado"));
-		
+		User user = getUserById(id);
 		return new UserDto(user);
 	}
 
@@ -38,13 +36,23 @@ public class UserService {
 		return new UserDto(user);
 	}
 	
-	public UserDto updateOne(UserDto userDto) {
-		return null;
+	public UserDto updateOne(UserDto userDto, String id) {
+		
+		User user = getUserById(id);		
+		copyDtoToEntity(userDto, user);		
+		this.repository.save(user);
+		return new UserDto(user);	
+		
 	}
 
 	private void copyDtoToEntity(UserDto userDto, User user) {
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());		
+	}
+	
+	private User getUserById(String id) {
+		return this.repository.findById(id)
+				.orElseThrow(() -> new ElementNotFoundException("Elemento não encontrado"));
 	}
 
 }
