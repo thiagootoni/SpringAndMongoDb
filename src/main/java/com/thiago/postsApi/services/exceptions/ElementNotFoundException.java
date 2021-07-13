@@ -1,9 +1,9 @@
 package com.thiago.postsApi.services.exceptions;
 
-public class ElementNotFundException extends RuntimeException{
+public class ElementNotFoundException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 	
-	public ElementNotFundException(String msg) {
+	public ElementNotFoundException(String msg) {
 		super(msg);
 	}
 

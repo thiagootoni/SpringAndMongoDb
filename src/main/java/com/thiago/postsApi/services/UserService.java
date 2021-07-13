@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.thiago.postsApi.models.dto.UserDto;
 import com.thiago.postsApi.models.entities.User;
 import com.thiago.postsApi.respositories.UserRepository;
-import com.thiago.postsApi.services.exceptions.ElementNotFundException;
+import com.thiago.postsApi.services.exceptions.ElementNotFoundException;
 
 @Service
 public class UserService {
@@ -25,7 +25,7 @@ public class UserService {
 	public UserDto findById(String id) {
 		
 		User user = this.repository.findById(id)
-				.orElseThrow(() -> new ElementNotFundException("Elemento não encontrado"));
+				.orElseThrow(() -> new ElementNotFoundException("Elemento não encontrado"));
 		
 		return new UserDto(user);
 	}
