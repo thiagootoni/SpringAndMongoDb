@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thiago.postsApi.models.dto.PostDto;
 import com.thiago.postsApi.models.dto.UserDto;
 import com.thiago.postsApi.models.entities.User;
 import com.thiago.postsApi.respositories.UserRepository;
@@ -26,6 +27,12 @@ public class UserService {
 		
 		User user = getUserById(id);
 		return new UserDto(user);
+	}
+	
+	public List<PostDto> findUserPosts(String id) {
+		User user = this.getUserById(id);
+		List<PostDto> postsDto = user.getPosts().stream().map(x -> new PostDto(x)).collect(Collectors.toList());
+		return postsDto;
 	}
 
 	public UserDto insertOne(UserDto userDto) {
@@ -59,6 +66,8 @@ public class UserService {
 		return this.repository.findById(id)
 				.orElseThrow(() -> new ElementNotFoundException("Elemento não encontrado"));
 	}
+
+	
 
 	
 
