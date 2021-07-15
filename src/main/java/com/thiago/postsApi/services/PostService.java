@@ -31,6 +31,11 @@ public class PostService {
 		Post post = this.getPostById(id);
 		this.repository.delete(post);		
 	}
+	
+	public List<PostDto> findByTitleContainingSentence(String sentence){		
+		List<Post> posts = this.repository.findByTitleContainingIgnoreCase(sentence);
+		return posts.stream().map(x -> new PostDto(x)).collect(Collectors.toList());		
+	}
 
 	private void copyDtoToEntity(PostDto postDto, Post post) {
 		//post.setId(postDto.getId());

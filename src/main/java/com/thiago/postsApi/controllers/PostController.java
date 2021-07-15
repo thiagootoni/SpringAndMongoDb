@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thiago.postsApi.models.dto.PostDto;
@@ -30,6 +31,12 @@ public class PostController {
 	public ResponseEntity<PostDto> findById(@PathVariable String id) {
 		PostDto userDto = service.findById(id);
 		return ResponseEntity.ok(userDto);
+	}
+	
+	@GetMapping(value = "/titleSearch")
+	public ResponseEntity<List<PostDto>> findByTitle(@RequestParam(value="text", defaultValue = "") String text){
+		List<PostDto> posts = this.service.findByTitleContainingSentence(text);
+		return ResponseEntity.ok(posts);
 	}
 
 }
