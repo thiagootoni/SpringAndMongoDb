@@ -1,5 +1,6 @@
 package com.thiago.postsApi.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import com.thiago.postsApi.models.dto.PostDto;
 import com.thiago.postsApi.models.entities.Post;
 import com.thiago.postsApi.respositories.PostRepository;
 import com.thiago.postsApi.services.exceptions.ElementNotFoundException;
+import com.thiago.postsApi.utils.DateConversors;
 
 @Service
 public class PostService {
@@ -35,6 +37,13 @@ public class PostService {
 	public List<PostDto> findByTitleContainingSentence(String sentence){		
 		List<Post> posts = this.repository.findByTitleContainingIgnoreCase(sentence);
 		return posts.stream().map(x -> new PostDto(x)).collect(Collectors.toList());		
+	}
+	
+	public List<PostDto> findForAnyMatchInAggregateStructure(String text, String start, String end){
+		Instant startDate = DateConversors.stringToInstant(start, Instant.ofEpochMilli(0));
+		Instant endDate = DateConversors.stringToInstant(end, Instant.now());
+		List<Post> posts = this.repository.searchForTextInAggregateStructure(text, startDate, endDate);
+		return posts.stream().map(x -> new PostDto(x)).collect(Collectors.toList());
 	}
 
 	private void copyDtoToEntity(PostDto postDto, Post post) {

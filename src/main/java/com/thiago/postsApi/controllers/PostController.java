@@ -38,5 +38,17 @@ public class PostController {
 		List<PostDto> posts = this.service.findByTitleContainingSentence(text);
 		return ResponseEntity.ok(posts);
 	}
+	
+	@GetMapping(value = "/fullSearch")
+	public ResponseEntity<List<PostDto>> findByTitle(
+			@RequestParam(value="text", defaultValue = "") String text,
+			@RequestParam(value="startDate", defaultValue = "") String startDate,
+			@RequestParam(value="endDate", defaultValue = "") String endDate){
+		
+		List<PostDto> posts = this.service.findForAnyMatchInAggregateStructure(text, startDate, endDate);
+		return ResponseEntity.ok(posts);
+	}
+	
+	
 
 }
