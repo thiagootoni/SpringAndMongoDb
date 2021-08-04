@@ -45,7 +45,7 @@ public class UserService {
 	
 	public UserDto updateOne(UserDto userDto, String id) {
 		
-		User user = getUserById(id);		
+		User user = getUserById(id);
 		copyDtoToEntity(userDto, user);		
 		this.repository.save(user);
 		return new UserDto(user);	
